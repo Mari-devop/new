@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATTIX Application - Опис функціоналу</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2::before {
+            content: "📋";
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3::before {
+            content: "▶";
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-top: 3px solid #e74c3c;
+        }
+
+        .feature-card h4 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .workflow-step h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .status-ready { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .status-applied { background: #cce5ff; color: #004085; }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .integration-box {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .summary-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .summary-box h3::before {
+            content: "🎯";
+            margin-right: 10px;
+        }
+
+        /* New styles for restructured content */
+        .problem-statement {
+            background: #fff5f5;
+            border: 2px solid #fed7d7;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .pain-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pain-point {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .solution-overview h3 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .solution-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 4px solid #48bb78;
+            text-align: center;
+        }
+
+        .benefit-card h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .workflow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid #4299e1;
+        }
+
+        .step-number {
+            background: #4299e1;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .workflow-step h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .event-types {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .event-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .event-badge.auto {
+            background: #e6fffa;
+            color: #234e52;
+            border: 1px solid #81e6d9;
+        }
+
+        .event-badge.manual {
+            background: #fef5e7;
+            color: #744210;
+            border: 1px solid #f6e05e;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .features-grid .feature-card {
+            border-top: 4px solid #9f7aea;
+        }
+
+        .features-grid .feature-card h4 {
+            color: #553c9a;
+        }
+
+        .example-scenario {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .example-scenario h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #cbd5e0;
+        }
+
+        .timeline-item .time {
+            background: #4a5568;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .timeline-item .action {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-top: 3px solid #48bb78;
+            text-align: center;
+        }
+
+        .benefit-item h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .limitations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .limitation-item {
+            background: #fef5e7;
+            border: 2px solid #f6e05e;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .limitation-item h4 {
+            color: #744210;
+            margin-bottom: 10px;
+        }
+
+        .integration-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .integration-option {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid #27ae60;
+        }
+
+        .integration-option h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .summary-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-point {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .summary-point h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .summary-point p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .feature-grid, .features-grid, .benefits-grid, .solution-benefits {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .timeline-item .time {
+                min-width: auto;
+            }
+            
+            .pain-points, .limitations, .integration-options, .summary-points {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Runbook CATTIX</h1>
+            <p>Система відстеження аналізу маркетингових кампаній</p>
+            <a href="design-mockup.html" style="color: white; font-size: 4.2rem;">Mockup for CATTIX Runbook</a>
+        </div>
+
+        <div class="content">
+            <!-- Problem Statement -->
+            <div class="section">
+                <h2>🎯 Проблема </h2>
+                <h3>(то воно видумано/ прогнозоване що так може бути)</h3>
+                <div class="problem-statement">
+                    <p><strong>Поточна ситуація:</strong> Менеджери втрачають час на відстеження коли прийдуть аналізи, не бачать загальної картини роботи всіх своїх кампаній (чи запам'ятовують), а керівництво не має прозорості в процесах своїх менеджерів.</p>
+                    <div class="pain-points">
+                        <div class="pain-point">❌ Втрата часу на пошук інформації в адмінці</div>
+                        <div class="pain-point">❌ Відсутність єдиної картини роботи</div>
+                        <div class="pain-point">❌ Складність звітності (треба робити вручну)</div>
+                        <div class="pain-point">❌ Пізнє чи ручне виявлення проблем</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution Overview -->
+            <div class="section">
+                <h2>💡 Рішення</h2>
+                <div class="solution-overview">
+                    <h3>Runbook CATTIX — це єдина панель відстеження для всіх аналізів та таск менеджер для планування своєї роботи</h3>
+                    <div class="solution-benefits">
+                        <div class="benefit-card">
+                            <h4>📊 Автоматичне відстеження</h4>
+                            <p>Збирає всі події з CATTIX автоматично</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>📅 Розумне планування</h4>
+                            <p>Показує що треба зробити сьогодні</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>📈 Прозора звітність</h4>
+                            <p>Готові звіти для клієнтів та керівництва</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>🚨 Швидке виявлення проблем</h4>
+                            <p>Підсвічує затримки та збої</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>🚨 Надання звітності роботи Cattix менеджера - клієнту</h4>
+                            <p>Прямий лінк зі звітності по роботі менеджера - по компанії клієнта</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="section">
+                <h2>⚙️ Як це працює</h2>
+                
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <h4>Збір подій</h4>
+                        <p>Автоматично отримуємо всі події з CATTIX:</p>
+                        <div class="event-types">
+                            <span class="event-badge auto">Авто: scheduled → started → ready → applied</span>
+                            <span class="event-badge manual">Ручні: manual_scheduled → started → ready → applied</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <h4>Аналіз та планування</h4>
+                        <p>Система аналізує події та створює план роботи:</p>
+                        <ul>
+                            <li>📋 <strong>Today</strong> — що треба зробити сьогодні</li>
+                            <li>📅 <strong>Calendar</strong> — майбутні аналізи</li>
+                            <li>📊 <strong>Changes</strong> — історія всіх змін</li>
+                        </ul>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <h4>Звітність</h4>
+                        <p>Автоматично генерує звіти:</p>
+                        <ul>
+                            <li>📄 PDF звіти по днях/тижнях/місяцях</li>
+                            <li>💬 Дайджести в Slack/Email</li>
+                            <li>🔗 Посилання для швидкого доступу</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="section">
+                <h2>🔧 Основні можливості</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>📅 Календар</h4>
+                        <p>Всі майбутні аналізи в одному місці</p>
+                        <ul>
+                            <li>Автоматичні та ручні аналізи</li>
+                            <li>Фільтри: клієнт, кампанія, тип</li>
+                            <li>Статуси: Upcoming, Due, Overdue</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📋 Сьогоднішні завдання</h4>
+                        <p>Що треба зробити прямо зараз</p>
+                        <ul>
+                            <li>Пріоритетні завдання</li>
+                            <li>Затримки та ескалації</li>
+                            <li>Швидкі дії</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📊 Картка аналізу</h4>
+                        <p>Детальна інформація про кожен аналіз</p>
+                        <ul>
+                            <li>Статус виконання</li>
+                            <li>Обсяг роботи (ETA)</li>
+                            <li>Прямий лінк в CATTIX</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📈 Стрічка змін</h4>
+                        <p>Історія всіх застосувань</p>
+                        <ul>
+                            <li>Хто, що, коли змінив</li>
+                            <li>Пошук та фільтри</li>
+                            <li>Експорт звітів</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real Examples -->
+            <div class="section">
+                <h2>📝 Реальні приклади</h2>
+
+                <div class="example-scenario">
+                    <h3>🟢 Успішний автоаналіз</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">10:00</div>
+                            <div class="action">Заплановано аналіз для Acme</div>
+                            <div class="status status-ready">Scheduled</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">10:03</div>
+                            <div class="action">Аналіз готовий: 35 ключових слів</div>
+                            <div class="status status-ready">Ready (ETA: 12 хв)</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">10:04</div>
+                            <div class="action">Автоматично застосовано</div>
+                            <div class="status status-applied">Applied</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-scenario">
+                    <h3>🟡 Ручний аналіз менеджера</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">14:00</div>
+                            <div class="action">Менеджер запустив ручний аналіз</div>
+                            <div class="status status-pending">Manual</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">14:07</div>
+                            <div class="action">Готовий: 58 елементів</div>
+                            <div class="status status-pending">Pending Review</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">14:40</div>
+                            <div class="action">Менеджер застосував зміни</div>
+                            <div class="status status-applied">Applied</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-scenario">
+                    <h3>🔴 Проблемна ситуація</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">09:00</div>
+                            <div class="action">Аналіз готовий</div>
+                            <div class="status status-ready">Ready</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">11:00</div>
+                            <div class="action">Застосування затримується</div>
+                            <div class="status status-error">Overdue</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">11:05</div>
+                            <div class="action">Система відправила сповіщення</div>
+                            <div class="status status-error">Alert Sent</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="section">
+                <h2>🎯 Переваги</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <h4>⏰ Економія часу</h4>
+                        <p>Менеджери не витрачають час на пошук інформації</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>👁️ Прозорість</h4>
+                        <p>Керівництво бачить всю картину роботи</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>📊 Автоматизація</h4>
+                        <p>Звіти генеруються автоматично</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>🚨 Швидка реакція</h4>
+                        <p>Проблеми виявляються миттєво</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Executive Summary -->
+            <div class="summary-box">
+                <h3>🎯 Підсумок</h3>
+                <p><strong>Runbook CATTIX</strong> — це єдина панель відстеження та планування аналізів, яка дає повну прозорість роботи з аналізами без змін у поточних процесах:</p>
+                <div class="summary-points">
+                    <div class="summary-point">
+                        <h4>📊 Єдина картина</h4>
+                        <p>Всі авто- та ручні аналізи в одному календарі</p>
+                    </div>
+                    <div class="summary-point">
+                        <h4>⚡ Миттєві звіти</h4>
+                        <p>Готові резюме з ETA та пріоритетами</p>
+                    </div>
+                    <div class="summary-point">
+                        <h4>📈 Автоматична звітність</h4>
+                        <p>PDF звіти та дайджести для клієнтів</p>
+                    </div>
+                    <div class="summary-point">
+                        <h4>🚨 Раннє виявлення проблем</h4>
+                        <p>Автоматичні сповіщення про затримки</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
